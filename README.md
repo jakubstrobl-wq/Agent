@@ -9,6 +9,8 @@ How it works: you chat with Claude as usual inside **Claude Code** (which uses y
 | `ask_local_model` | Ask the local model anything — second opinions, free generation |
 | `summarize_locally` | Summarize text on your PC, so private content never leaves it |
 | `list_local_models` | See which local models are installed |
+| `redact_locally` | Strip emails, phone numbers, card numbers, keys, and names from text — on your PC |
+| `redact_file` | Redact a file from disk so Claude never sees the original contents |
 
 ```
 You ↔ Claude Code (your Claude subscription)
@@ -58,6 +60,9 @@ Make sure Ollama is running (it starts with Windows by default), then ask Claude
 - *"Ask the local model what 2+2 is"*
 - *"Summarize this file locally — it's private, don't read it yourself"*
 - *"Get a second opinion from the local model on this paragraph"*
+- *"Redact C:\Users\me\Documents\contract.txt and then explain it — don't read the original"*
+
+**How redaction works:** emails, phone numbers, card numbers, SSNs, IP addresses, and API keys are removed by exact pattern matching (reliable, never misses the format), and the local model is used only to spot person names — the text itself is replaced by the bridge, so the model can't change your wording. If Ollama is off, you still get the pattern-based redaction plus a note that names were skipped.
 
 If Ollama isn't running, the tools reply with a friendly reminder to start it.
 
@@ -65,4 +70,3 @@ If Ollama isn't running, the tools reply with a friendly reminder to start it.
 
 - **Smart router / quota saver** — a small agent (Claude Agent SDK) that automatically sends easy or private prompts to the local model and only hard ones to Claude, stretching your subscription limits.
 - **Draft locally, refine with Claude** — the local model writes free first drafts; Claude polishes them.
-- **Privacy gateway** — the local model redacts names/emails/secrets from documents before anything is shared with Claude.
